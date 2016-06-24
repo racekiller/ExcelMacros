@@ -54,6 +54,12 @@ Dim Data As Variant  'Array for the file values
 Dim TargetRow, TargetCol As Integer
 Dim Arr() As Variant ' declare an unallocated array
 
+'Deleting/Creating CSVData Sheet will ensure empty cells that have not data
+'and add bad data to the CSV
+Sheets("CSVData").Select
+ActiveWindow.SelectedSheets.Delete
+CreateSheet ("CSVData")
+
 Sheets("CSVData").Select
 Sheets("CSVData").Cells.Select
 Selection.ClearContents
@@ -286,4 +292,8 @@ error_open_file:  'Returns empty Variant
 unhandled_error:  'Returns empty Variant
 
 End Function
-
+Private Sub CreateSheet(SheetName As String)
+    With ThisWorkbook
+        .Sheets.Add(After:=.Sheets(.Sheets.Count)).Name = "CSVData"
+    End With
+End Sub
